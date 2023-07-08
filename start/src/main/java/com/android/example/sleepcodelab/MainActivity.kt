@@ -116,6 +116,15 @@ class MainActivity : AppCompatActivity() {
 
     // TODO: Enable/Disable sleep tracking and ask for permissions if needed.
     fun onClickRequestSleepData(view: View) {
+        if (activityRecognitionPermissionApproved()) {
+            if (subscribedToSleepData) {
+                unsubscribeToSleepSegmentUpdates(applicationContext, sleepPendingIntent)
+            } else {
+                subscribeToSleepSegmentUpdates(applicationContext,sleepPendingIntent)
+            }
+        } else {
+            requestPermissionLauncher.launch(permission.ACTIVITY_RECOGNITION)
+        }
     }
 
     // Permission is checked before this method is called.
